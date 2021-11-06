@@ -7,28 +7,37 @@
         <title>Exel to pdf</title> 
     </head>
     <body>
-        <div class="container my-5" style="min-height: 100vh; background-color: #f9f9f9; padding: 30px;">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <label for="excelfile" class="form-label">Select Excel file</label>
-                    <input type="file"  class="form-control" id="excelfile" /> 
+        <div class="container my-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row pt-5 justify-content-center">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <label for="excelfile" class="form-label">Select Excel file</label>
+                            <input type="file"  class="form-control" id="excelfile" /> 
+                        </div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                            <input type="button" class="btn btn-success mt-3 px-5" id="viewfile" value="Submit" onclick="ExportToPdfView()" /> 
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row my-3">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <input type="button" class="btn btn-success" id="viewfile" value="Submit" onclick="ExportToPdfView()" /> 
-                </div>
-            </div>
-            <div class="row mt-5 download-button d-none">
+            
+            <div class="row mt-5 mb-2 download-button d-none">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-end">
                     <button class="btn btn-success" onclick="downloadPdf()">Download</button>
                     <!-- <button class="btn btn-success" onclick="window.print()">Print</button> -->
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div id="element-to-print">
-                        
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mt-5">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div id="element-to-print">
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,9 +146,43 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            This is to certify than Mr ${jsondata[i]['Name']}, ${jsondata[i]['Designation']} of 
+                                            This is to certify that Mr ${jsondata[i]['Name']}, ${jsondata[i]['Designation']} of 
                                             ${jsondata[i]['Department']} Department is a permanent employee of Devnet Limited. 
                                             He joined in the company on ${jsondata[i]['Joining Date']}. The company has paid total Tk 16,57,500 against as salary and allowance during the financial year ${jsondata[i]['Financial Year']} and assessment year ${jsondata[i]['Assessment Year']}. Details are given below.
+                                            <br></br>
+
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <th width="70%">Paticulars</th>
+                                                    <th width="30%">Amount of Taka</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Basic Pay</td>
+                                                        <td>1000000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>House Rent</td>
+                                                        <td>450000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Conveyance</td>
+                                                        <td>10000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Medical</td>
+                                                        <td>10000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Bonus</td>
+                                                        <td>20000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total</th>
+                                                        <th>1200000</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
                                             <br><br>
                                             <h5>Parvin Akhter</h5>
