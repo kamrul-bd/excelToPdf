@@ -4,19 +4,69 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <title>Exel to pdf</title> 
+        <title>Excel to pdf</title> 
+        <style type="text/css">
+            table th, table td {
+                border-collapse: collapse;
+                border: 1px solid #b5b5b5;
+                padding: 2px 5px;
+            }
+            .content-div {
+                word-wrap: break-word; 
+                background-color: #fff; 
+                background-clip: border-box; 
+                border: 1px solid rgba(0,0,0,.125); 
+                border-radius: .25rem;
+                padding: 1rem 1rem;
+            }
+        </style>
+          <style>
+            /* .card-body span, .card-body p {
+                font-size:20px!important;
+                line-height: 1.6!important;
+            }
+            table th, table td {
+                font-size:18px!important;
+            } */
+            .single-row
+            {
+                page-break-inside: avoid;
+            }
+            .page-top {
+                padding-top: 200px;
+            }
+            @media print {
+                body *{
+                    margin: 0px!important;
+                }
+                body * {
+                    visibility: hidden;
+                }
+                #element-to-print, #element-to-print * {
+                    visibility: visible;
+                }
+                .page-top {
+                    padding-top: 200px;
+                }
+                #element-to-print {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+            }
+        </style>
     </head>
     <body>
         <div class="container my-5">
             <div class="card">
                 <div class="card-body">
-                    <div class="row pt-5 justify-content-center">
+                    <div class="row pt-5 pb-3 justify-content-center">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <label for="excelfile" class="form-label">Select Excel file</label>
                             <input type="file"  class="form-control" id="excelfile" /> 
                         </div>
                     </div>
-                    <div class="row my-3 justify-content-center">
+                    <div class="row mb-5 justify-content-center">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
                             <input type="button" class="btn btn-success mt-3 px-5" id="viewfile" value="Submit" onclick="ExportToPdfView()" /> 
                         </div>
@@ -26,24 +76,19 @@
             
             <div class="row mt-5 mb-2 download-button d-none">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-end">
-                    <button class="btn btn-success" onclick="downloadPdf()">Download</button>
-                    <!-- <button class="btn btn-success" onclick="window.print()">Print</button> -->
+                    <!-- <button class="btn btn-success" onclick="downloadPdf()">Download</button> -->
+                    <button class="btn btn-success px-5" onclick="window.print()">Print</button>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mt-5">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <div id="element-to-print">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
 
+            <div class="content-div element-to-print-div d-none">
+                <div id="element-to-print">
+                    
+                </div>
+            </div>
+            
+            
+        </div>
 
         <script src="assets/js/jquery.min.js"></script>
         
@@ -57,24 +102,26 @@
                 //$('#element-to-print').text('dfadfa dfasfdafa dfasfafsaf fadfasfsa dfadfasfasdf dfadfasdf asdfasfd fdasfd');
                 var element = document.getElementById('element-to-print');
                 var opt = {
-                    margin:       1,
+                    margin:       0.5,
                     filename:     'myfile.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2 },
+                    html2canvas:  { scale: 2},
                     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
                     pagebreak: { mode: 'avoid-all', after: '.single-row' }
                 };
 
                 // New Promise-based usage:
                 html2pdf().set(opt).from(element).save();
-
-                // Old monolithic-style usage:
-                html2pdf(element, opt);
             }
 
         </script>
 
         <script>
+            var today = new Date();
+            var todayDate = String(today.getDate()).padStart(2, '0')+'-'+ String(today.getMonth() + 1).padStart(2, '0')+'-'+today.getFullYear();
+
+            var formatedTodayDate = today.getFullYear()+'/'+ String(today.getMonth() + 1)+'/'+ String(today.getDate()).padStart(2, '0');
+
             function ExportToPdfView() {  
                 var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xlsx|.xls)$/;  
                 /*Checks whether the file is a valid excel file*/  
@@ -138,63 +185,78 @@
                 for (var i = 0; i < jsondata.length; i++) {  
                     console.log('jsondatassss: ', jsondata[i]);
 
-                    var row = `<div class="single-row"> 
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                            <h3>To Whom It May Concern</h3>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            This is to certify that Mr ${jsondata[i]['Name']}, ${jsondata[i]['Designation']} of 
-                                            ${jsondata[i]['Department']} Department is a permanent employee of Devnet Limited. 
-                                            He joined in the company on ${jsondata[i]['Joining Date']}. The company has paid total Tk 16,57,500 against as salary and allowance during the financial year ${jsondata[i]['Financial Year']} and assessment year ${jsondata[i]['Assessment Year']}. Details are given below.
-                                            <br></br>
-
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <th width="70%">Paticulars</th>
-                                                    <th width="30%">Amount of Taka</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Basic Pay</td>
-                                                        <td>1000000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>House Rent</td>
-                                                        <td>450000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Conveyance</td>
-                                                        <td>10000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Medical</td>
-                                                        <td>10000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Bonus</td>
-                                                        <td>20000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Total</th>
-                                                        <th>1200000</th>
-                                                    </tr>
-                                                </tbody>
+                    var row = `${i > 0 ? '<div id="element-to-hide" class="py-4" data-html2canvas-ignore="true"><hr></div>' : ''} 
+                                <div class="single-row"> 
+                                    
+                                    <div class="page-top">
+                                        <div class="page-header">
+                                            <table width="100%" style="margin-bottom:40px!important;">
+                                                <tr>
+                                                    <td style="border:0px;">Date: ${todayDate}</td>
+                                                    <td class="text-end" style="border:0px;">Ref: Acc/${formatedTodayDate}-${i+1}</td>
+                                                </tr>
                                             </table>
-
-                                            <br><br>
-                                            <h5>Parvin Akhter</h5>
-                                            Deputy Manager (Accounts & Finance) <br>
-                                            Devnet Limited
                                         </div>
+                                        <h3 class="text-center" style="margin-bottom:20px!important;">To Whom It May Concern</h3>
+                                        This is to certify that Mr ${jsondata[i]['Name']}, ${jsondata[i]['Designation']} of 
+                                        ${jsondata[i]['Department']} Department is a permanent employee of Devnet Limited. 
+                                        He joined in the company on ${jsondata[i]['Joining Date']}. The company has paid total Tk 16,57,500 against as salary and allowance during the financial year ${jsondata[i]['Financial Year']} and assessment year ${jsondata[i]['Assessment Year']}. Details are given below.
+                                        <br></br>
+                                    <div>
+
+                                    <table width="100%">
+                                        <thead>
+                                            <th width="70%">Paticulars</th>
+                                            <th width="30%" class="text-end">Amount of Taka</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Basic Pay</td>
+                                                <td class="text-end">1000000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>House Rent</td>
+                                                <td class="text-end">450000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Conveyance</td>
+                                                <td class="text-end">10000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Medical</td>
+                                                <td class="text-end">10000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bonus</td>
+                                                <td class="text-end">20000</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total</th>
+                                                <th class="text-end">1200000</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <br>
+                                    <div class="">
+                                        An amount of Tk. 70,000/-() only was deducted from his salary as Tax at source under section 50 of the Income Tax Ordinance, 1984.
                                     </div>
 
+                                    <br>
+                                    <div class="">
+                                        <strong>TDS Payment Details:</strong><br>
+                                        Some text hear for details. Some more text hear for details.
+                                    </div>
+
+                                    <br>
+                                    <h5>Parvin Akhter</h5>
+                                    Deputy Manager (Accounts & Finance) <br>
+                                    Devnet Limited
                                 </div>`;
 
                     $('#element-to-print').append(row);
                     $('.download-button').removeClass('d-none');
+                    $('.element-to-print-div').removeClass('d-none');
                 }  
             }  
 
