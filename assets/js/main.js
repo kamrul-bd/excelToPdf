@@ -80,7 +80,7 @@ function BindRow(jsondata) {/*Function used to convert the JSON array*/
                         <h3 class="text-center" style="margin-bottom:20px!important;">To Whom It May Concern</h3>
                         This is to certify that Mr ${jsondata[i]['Name']}, ${jsondata[i]['Designation']} of 
                         ${jsondata[i]['Department']} Department is a permanent employee of Devnet Limited. 
-                        He joined in the company on ${jsondata[i]['Joining Date']}. The company has paid total Tk  1657500 (${numberToWords('16,57500')}) only against as salary and allowance during the financial year ${jsondata[i]['Financial Year']} and assessment year ${jsondata[i]['Assessment Year']}. Details are given below.
+                        He joined in the company on ${jsondata[i]['Joining Date']}. The company has paid total Tk  ${jsondata[i]['Total Amount']} (${numberToWords(jsondata[i]['Total Amount'])}) only against as salary and allowance during the financial year ${jsondata[i]['Financial Year']} and assessment year ${jsondata[i]['Assessment Year']}. Details are given below.
                         <br></br>
                     <div>
 
