@@ -66,6 +66,10 @@ function BindRow(jsondata) {/*Function used to convert the JSON array*/
     var columns = BindColumnHeader(jsondata); /*Gets all the column headings of Excel*/  
 
     for (var i = 0; i < jsondata.length; i++) {
+        var challanDates = jsondata[i]['Challan Date'].split(',');
+        var challanNos = jsondata[i]['Challan No.'].split(',');
+        var challanAmounts = jsondata[i]['Challan Amount'].split(',');
+
         var row = `${i > 0 ? '<div id="element-to-hide" class="py-4" data-html2canvas-ignore="true"><hr></div>' : ''} 
                 <div class="single-row">
                     <div class="page-top">
@@ -128,16 +132,28 @@ function BindRow(jsondata) {/*Function used to convert the JSON array*/
                         <table width="100%">
                           <tbody>
                               <tr>
-                                  <td width="100%">
-                                    Challan Date: ${jsondata[i]['Challan Date']}<br>
-                                    Challan No.: ${jsondata[i]['Challan No.']}<br>
-                                    Challan Amount.: ${jsondata[i]['Challan Amount']}
-                                  </td>
+                                  <th>Challan Date</th>
+                                  <th>Challan No.</th>
+                                  <th>Challan Amount</th>
                               </tr>
+                                ${(function fun() {
+                                    var challanData = ''; 
+                                    for (var n = 0; n < challanDates.length; n++){
+                                        challanData += `<tr>
+                                                    <td>${challanDates[n]}</td>
+                                                    <td>${challanNos[n]}</td>
+                                                    <td>${challanAmounts[n]}</td>
+                                                </tr>`;
+                                    }
+
+                                    return challanData;
+                                })()}
+
                           </tbody>
                       </table>
                     </div>
-
+                    
+                    <br>
                     <br>
                     <h5>Parvin Akhter</h5>
                     Deputy Manager (Accounts & Finance) <br>
