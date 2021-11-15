@@ -74,7 +74,7 @@ function BindRow(jsondata) {/*Function used to convert the JSON array*/
                 <div class="single-row">
                     <div class="page-top">
                         <div class="page-header">
-                            <table width="100%" style="margin-bottom:40px!important;">
+                            <table width="100%" style="margin-bottom:20px!important;">
                                 <tr>
                                     <td style="border:0px;">Date: ${todayDate}</td>
                                     <td class="text-end" style="border:0px;">Ref: Acc/${formatedTodayDate}-${i+1}</td>
@@ -121,21 +121,19 @@ function BindRow(jsondata) {/*Function used to convert the JSON array*/
                         </tbody>
                     </table>
 
-                    <br>
-                    <div class="">
+                    <div class="mt-3">
                         An amount of Tk. ${jsondata[i]['Total TDS']}/- (${numberToWords(jsondata[i]['Total TDS'])}) only was deducted from his salary as Tax at source under section 50 of the Income Tax Ordinance, 1984.
                     </div>
 
-                    <br>
-                    <div class="">
+                    <div class="mt-3">
                         <strong>TDS Payment Details:</strong><br>
                         <table width="100%">
-                          <tbody>
-                              <tr>
-                                  <th>Challan Date</th>
-                                  <th>Challan No.</th>
-                                  <th>Challan Amount</th>
-                              </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Challan Date</th>
+                                    <th>Challan No.</th>
+                                    <th>Challan Amount</th>
+                                </tr>
                                 ${(function fun() {
                                     var challanData = ''; 
                                     for (var n = 0; n < challanDates.length; n++){
@@ -149,13 +147,10 @@ function BindRow(jsondata) {/*Function used to convert the JSON array*/
                                     return challanData;
                                 })()}
 
-                          </tbody>
-                      </table>
+                            </tbody>
+                        </table>
                     </div>
-                    
-                    <br>
-                    <br>
-                    <h5>Parvin Akhter</h5>
+                    <h5 style="margin-top:100px!important;">Parvin Akhter</h5>
                     Deputy Manager (Accounts & Finance) <br>
                     Devnet Limited
                 </div>`;

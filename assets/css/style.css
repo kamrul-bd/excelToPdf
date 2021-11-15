@@ -28,7 +28,7 @@ table th, table td {
     page-break-inside: avoid;
 }
 .page-top {
-    padding-top: 120px;
+    padding-top: 110px;
 }
 @media print {
     body *{
@@ -41,7 +41,7 @@ table th, table td {
         visibility: visible;
     }
     .page-top {
-        padding-top: 120px;
+        padding-top: 110px;
     }
     #element-to-print {
         position: absolute;
